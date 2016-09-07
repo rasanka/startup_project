@@ -11,7 +11,7 @@
 
 	<context:component-scan base-package="com.ebees.web.rest.ws" />
 	
-	<mvc:resources location="/app/**" mapping="/app/build/"/>
+	<mvc:resources mapping="/app/**" location="/app/build/"/>
 
 	<mvc:annotation-driven />
 
