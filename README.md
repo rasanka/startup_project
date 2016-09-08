@@ -1,29 +1,27 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Welcome to TicketGuru Development setup
 
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* This repository is for TicketGuru.lk 
+* Version 1.0
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Clone the repository from BitBucket
+* Run Maven build to download the dependencies
+* Install MySQL (Community Server 5.7+) and create a database call ticketguru - [Table structure will be generate automatically from the code]
+* JUnit tests available for REST services 
+* Apache Tomcat 7.0+ (Currently running in 9.0) 
+* Deploy in local an access LOCAL:PORT/TicektGuru/app/index.html
 
 ### Contribution guidelines ###
 
 * Writing tests
 * Code review
-* Other guidelines
+* Update Revision history
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Repo owner - rasanka2006@gmail.com
