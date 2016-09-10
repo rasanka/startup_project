@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,9 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<UserListResource> findAllUsers(@RequestParam(value = "email", required = false) String email,
+	@PreAuthorize("permitAll")
+	public ResponseEntity<UserListResource> findAllUsers(
+			@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "password", required = false) String password) {
 		UserList list = null;
 		if (email == null) {
@@ -63,7 +66,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public ResponseEntity<UserResource> getUser(@PathVariable Long userId) {
+	@PreAuthorize("permitAll")
+	public ResponseEntity<UserResource> getUser(
+			@PathVariable Long userId) {
 
 		User user = service.findUser(userId);
 
@@ -76,7 +81,9 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<UserResource> createUser(@RequestBody UserResource sentUser) {
+	@PreAuthorize("permitAll")
+	public ResponseEntity<UserResource> createUser(
+			@RequestBody UserResource sentUser) {
 		try {
 			User createdUser = service.createUser(sentUser.toUser());
 			UserResource res = new UserResourceAsm().toResource(createdUser);

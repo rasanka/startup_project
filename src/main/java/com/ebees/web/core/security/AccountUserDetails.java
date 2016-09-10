@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Chris on 10/19/14.
+ * Created by Rasanka on 9/9/2016.
  */
 public class AccountUserDetails implements UserDetails {
     private final User account;
