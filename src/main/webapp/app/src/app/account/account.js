@@ -43,10 +43,6 @@ angular.module('ngBoilerplate.account', ['ui.router', 'ngResource', 'base64'])
     };
     return session;
 })
-.factory('blogService', function($resource) {
-    var service = {};
-    return service;
-})
 .factory('accountService', function($resource) {
     var service = {};
     service.register = function(user, success, failure) {
