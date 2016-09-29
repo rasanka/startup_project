@@ -55,7 +55,7 @@ angular.module('ngBoilerplate.account', ['ui.router', 'ngResource', 'base64'])
     };
     service.userExists = function(user, success, failure) {
         var User = $resource("/TicketGuru/rest/users");
-        var data = User.get({name:user.email, password:user.password}, function() {
+        var data = User.get({email:user.email, password:user.password}, function() {
             var users = data.userList;
             if(users.length !== 0) {
                 success(user);
@@ -65,6 +65,19 @@ angular.module('ngBoilerplate.account', ['ui.router', 'ngResource', 'base64'])
         },
         failure);
     };
+    service.checkLogin = function(user, success, failure) {
+        var User = $resource("/TicketGuru/rest/users/login");
+        var data = User.get({email:user.email, password:user.password}, function() {
+            console.log("DATA IS LOGGED IN -"+data.loggedIn);
+            //var canLogin = data.canLogin;
+            if(data.loggedIn) {
+                success(user);
+            } else {
+                failure();
+            }
+        },
+        failure);
+    };    
     service.getAllAccounts = function() {
           var User = $resource("/TicketGuru/rest/users");
           return User.get().$promise.then(function(data) {
@@ -75,8 +88,8 @@ angular.module('ngBoilerplate.account', ['ui.router', 'ngResource', 'base64'])
 })
 .controller("LoginCtrl", function($scope, sessionService, accountService, $state) {
     $scope.login = function() {
-        console.log("Trying to login");
-        accountService.userExists($scope.user, function(user) {
+        console.log('Login in....');
+        accountService.checkLogin($scope.user, function(user) {
             sessionService.login($scope.user).then(function() {
                 $state.go("home");
             });

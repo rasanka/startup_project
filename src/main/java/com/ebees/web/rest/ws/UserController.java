@@ -21,8 +21,10 @@ import com.ebees.web.core.services.IUserService;
 import com.ebees.web.core.services.exceptions.UserExistsException;
 import com.ebees.web.core.services.util.UserList;
 import com.ebees.web.rest.exceptions.ConflictException;
+import com.ebees.web.rest.resources.LoginResource;
 import com.ebees.web.rest.resources.UserListResource;
 import com.ebees.web.rest.resources.UserResource;
+import com.ebees.web.rest.resources.asm.LoginResourceAsm;
 import com.ebees.web.rest.resources.asm.UserListResourceAsm;
 import com.ebees.web.rest.resources.asm.UserResourceAsm;
 
@@ -40,10 +42,27 @@ public class UserController {
 		this.service = service;
 	}
 
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@PreAuthorize("permitAll")
+	public ResponseEntity<LoginResource> checkLogin(@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "password", required = false) String password) {
+
+		boolean canLogin = false;
+		User user = service.findByEmail(email);
+		if (user != null) {
+			if (password != null) {
+				if (user.getPassword().equals(password)) {
+					canLogin = true;
+				}
+			}
+		}
+		LoginResource res = new LoginResourceAsm().toResource(canLogin);
+		return new ResponseEntity<LoginResource>(res, HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.GET)
 	@PreAuthorize("permitAll")
-	public ResponseEntity<UserListResource> findAllUsers(
-			@RequestParam(value = "email", required = false) String email,
+	public ResponseEntity<UserListResource> findAllUsers(@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "password", required = false) String password) {
 		UserList list = null;
 		if (email == null) {
@@ -67,8 +86,7 @@ public class UserController {
 
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	@PreAuthorize("permitAll")
-	public ResponseEntity<UserResource> getUser(
-			@PathVariable Long userId) {
+	public ResponseEntity<UserResource> getUser(@PathVariable Long userId) {
 
 		User user = service.findUser(userId);
 
@@ -82,8 +100,7 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@PreAuthorize("permitAll")
-	public ResponseEntity<UserResource> createUser(
-			@RequestBody UserResource sentUser) {
+	public ResponseEntity<UserResource> createUser(@RequestBody UserResource sentUser) {
 		try {
 			User createdUser = service.createUser(sentUser.toUser());
 			UserResource res = new UserResourceAsm().toResource(createdUser);
