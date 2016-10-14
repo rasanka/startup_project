@@ -1,18 +1,22 @@
 package com.ebees.web.core.security;
 
-import com.ebees.web.core.entities.User;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import com.ebees.web.core.entities.User;
 
 /**
  * Created by Rasanka on 9/9/2016.
  */
 public class AccountUserDetails implements UserDetails {
-    private final User account;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final User account;
 
     public AccountUserDetails(User account) {
         this.account = account;
@@ -20,7 +24,8 @@ public class AccountUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new GrantedAuthority() {
+        @SuppressWarnings("serial")
+		GrantedAuthority authority = new GrantedAuthority() {
             @Override
             public String getAuthority() {
                 return "USER";
