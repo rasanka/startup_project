@@ -215,6 +215,13 @@ angular.module("home/home.tpl.html", []).run(["$templateCache", function($templa
     "    </a>\n" +
     "  </div>\n" +
     "\n" +
+    "  <div class=\"btn-group\">\n" +
+    "    <a ng-click=\"buy()\" class=\"btn btn-large btn-default\">\n" +
+    "      <i class=\"fa fa-book\"></i>\n" +
+    "      Buy Ticket\n" +
+    "    </a>\n" +
+    "  </div>\n" +
+    "\n" +
     "\n" +
     "</div>\n" +
     "\n" +
